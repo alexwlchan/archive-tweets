@@ -18,7 +18,6 @@ You don't *have* to keep your archive in Dropbox, but that's a convenient place 
 
 You also don't *have* to archive every type of message, and you can delete the associated script and empty archive file if you want. However, keep the dummy values in `lastID.txt` unless you edit Line 62 of the remaining scripts, which updates the value in `lastID.txt`.
 
-
 [1]: http://www.leancrew.com/all-this/2012/07/archiving-tweets-without-ifttt/
 [2]: http://www.leancrew.com/all-this/2012/07/archiving-tweets/
 [3]: http://www.timbueno.com/2012/07/07/rolling-my-own-automatic-tweet-archiver
