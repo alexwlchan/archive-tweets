@@ -1,1 +1,5 @@
-100
+twitter: 100
+mention: 100
+favorit: 100
+dm-send: 100
+dm-rece: 100

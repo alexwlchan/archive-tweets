@@ -6,9 +6,9 @@ import os
 
 # Parameters.
 me = 'username'
-urlprefix = 'http://twitter.com/%s/status/' % me
+urlprefix = 'http://twitter.com/'
 tweetdir = os.environ['HOME'] + '/Dropbox/twitter/'
-tweetfile = tweetdir + 'tweets.txt'
+tweetfile = tweetdir + 'mentions.txt'
 idfile = tweetdir + 'lastID.txt'
 datefmt = '%B %-d, %Y at %-I:%M %p'
 homeTZ = pytz.timezone('US/Central')
@@ -28,38 +28,38 @@ def setup_api():
 # Authorize.
 api = setup_api()
 
-# Get the ID of the last downloaded tweet.
+# Get the ID of the last downloaded mention.
 a = {}
 with open(idfile, 'r') as f:
   for line in f:
 	k, v = line.split(': ')
 	a[k] = v.strip()
-  lastID = a['twitter']
+  lastID = a['mention']
 
-# Collect all the tweets since the last one.
-tweets = api.user_timeline(me, since_id=lastID, count=200, include_rts=True)
+# Collect all the mentions since the last one.
+tweets = api.mentions(since_id=lastID)
 
-# Write them out to the twitter.txt file.
+# Write them out to the mentions.txt file.
 with open(tweetfile, 'a') as f:
     for t in reversed(tweets):
       ts = utc.localize(t.created_at).astimezone(homeTZ)
       lines = ['',
                t.text,
-               ts.strftime(datefmt),
-               urlprefix + t.id_str,
+               '',
+               'at [' + ts.strftime(datefmt) + '](' + urlprefix + t.user.screen_name + '/status/' + t.id_str + ') by [@' + t.user.screen_name + '](' + urlprefix + t.user.screen_name + ')',
                '- - - - -',
                '']
       f.write('\n'.join(lines).encode('utf8'))
       lastID = t.id_str
 
-# Update the ID of the last downloaded tweet.
+# Update the ID of the last downloaded mention.
 with open(idfile, 'r') as f:
   data = f.readlines()
 
 print data
-print "twitter: " + data[0]
+print "mention: " + data[0]
 
-data[0] = 'twitter: ' + lastID + '\n'
+data[1] = 'mention: ' + lastID + '\n'
 
 with open(idfile, 'w') as f:
   f.writelines ( data )
