@@ -56,9 +56,6 @@ with open(tweetfile, 'a') as f:
 with open(idfile, 'r') as f:
   data = f.readlines()
 
-print data
-print "twitter: " + data[0]
-
 data[0] = 'twitter: ' + lastID + '\n'
 
 with open(idfile, 'w') as f:
